@@ -1,5 +1,3 @@
-```lua
-
 --Just put this in StarterGui!
 
 local module = {}
