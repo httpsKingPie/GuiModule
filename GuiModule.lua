@@ -11,7 +11,6 @@ local TweenService = game:GetService("TweenService")
 local Workspace = game:GetService("Workspace")
 
 local LocalPlayer = script.Parent.Parent
-local Character = LocalPlayer.Character
 
 local Camera = Workspace.CurrentCamera
 
@@ -68,9 +67,6 @@ function module.LoopSound(SoundId, TweenInformation)
 	end
 end
 
---Example use, because this is really finicky
---local MultiCamSystem = coroutine.create(GuiModule.MultiCameraSystem)
---coroutine.resume(MultiCamSystem, CameraPositions, CameraTweenInformation, {TintColor = Color3.fromRGB(0, 0, 0), TweenInformation = TransitionCCTweenInformation})
 function module.MultiCameraSystem(PartFolder, CameraTweenInformation, ColorCorrectionFadeInformation) --This should be called as a coroutine.create
 	--CameraTweenInformation, CCFadeInformation, and CCTWeenInformation are optional but MUST be put as false if they aren't being used
 	--If no ColorCorrectionFadeInformation is inputted, there will be no CC fade at all
@@ -172,8 +168,13 @@ function module.MultiCameraSystem(PartFolder, CameraTweenInformation, ColorCorre
 			wait(TransitionDelay)
 		end
 	end
-	
-	
+end
+
+function module.StopMultiCameraSystem()
+	local CurrentCameraTween = LocalPlayer.PlayerGui:FindFirstChild("CurrentCameraTween").Value
+	Camera.CameraType = Enum.CameraType.Custom
+	Camera.CameraSubject = LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
+	CurrentCameraTween:Cancel()
 end
 
 return module
