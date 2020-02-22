@@ -171,10 +171,11 @@ function module.MultiCameraSystem(PartFolder, CameraTweenInformation, ColorCorre
 end
 
 function module.StopMultiCameraSystem()
-	local CurrentCameraTween = LocalPlayer.PlayerGui:FindFirstChild("CurrentCameraTween").Value
+	local CurrentCameraTween = LocalPlayer.PlayerGui:FindFirstChild("CurrentCameraTween")
 	Camera.CameraType = Enum.CameraType.Custom
 	Camera.CameraSubject = LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
-	CurrentCameraTween:Cancel()
+	CurrentCameraTween.Value:Cancel()
+	CurrentCameraTween:Destroy()
 end
 
 return module
