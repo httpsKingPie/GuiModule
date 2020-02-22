@@ -41,6 +41,7 @@ local TweenInformation3 = TweenInfo.new(
 	2
 )
 
+--Creates a looping sound
 function module.LoopSound(SoundId, TweenInformation)
 	--MusicId is required (this is the ID of the music being played)
 	--TweenInformation is optional
@@ -67,6 +68,9 @@ function module.LoopSound(SoundId, TweenInformation)
 	end
 end
 
+--Example use, because this is really finicky
+--local MultiCamSystem = coroutine.create(GuiModule.MultiCameraSystem)
+--coroutine.resume(MultiCamSystem, CameraPositions, CameraTweenInformation, {TintColor = Color3.fromRGB(0, 0, 0), TweenInformation = TransitionCCTweenInformation})
 function module.MultiCameraSystem(PartFolder, CameraTweenInformation, ColorCorrectionFadeInformation) --This should be called as a coroutine.create
 	--CameraTweenInformation, CCFadeInformation, and CCTWeenInformation are optional but MUST be put as false if they aren't being used
 	--If no ColorCorrectionFadeInformation is inputted, there will be no CC fade at all
@@ -176,6 +180,10 @@ function module.StopMultiCameraSystem()
 	Camera.CameraSubject = LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
 	CurrentCameraTween.Value:Cancel()
 	CurrentCameraTween:Destroy()
+end
+
+function module.FlashingElement(Element, Timer)
+	
 end
 
 return module
