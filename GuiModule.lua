@@ -1,4 +1,4 @@
---Just put this in StarterGui!
+--// Just put this in StarterGui!
 
 local module = {}
 
@@ -41,7 +41,7 @@ local TweenInformation3 = TweenInfo.new(
 	2
 )
 
---Creates a looping sound
+--// Creates a looping sound
 function module.LoopSound(SoundId, TweenInformation)
 	--MusicId is required (this is the ID of the music being played)
 	--TweenInformation is optional
@@ -68,22 +68,22 @@ function module.LoopSound(SoundId, TweenInformation)
 	end
 end
 
---Example use, because this is really finicky
---local MultiCamSystem = coroutine.create(GuiModule.MultiCameraSystem)
---coroutine.resume(MultiCamSystem, CameraPositions, CameraTweenInformation, {TintColor = Color3.fromRGB(0, 0, 0), TweenInformation = TransitionCCTweenInformation})
-function module.MultiCameraSystem(PartFolder, CameraTweenInformation, ColorCorrectionFadeInformation) --This should be called as a coroutine.create
-	--CameraTweenInformation, CCFadeInformation, and CCTWeenInformation are optional but MUST be put as false if they aren't being used
-	--If no ColorCorrectionFadeInformation is inputted, there will be no CC fade at all
-	--Format ColorCorrectionFadeInformation as a table like {TintColor = , TweenInformation = }
+--// Example use, because this is really finicky
+--// local MultiCamSystem = coroutine.create(GuiModule.MultiCameraSystem)
+--// coroutine.resume(MultiCamSystem, CameraPositions, CameraTweenInformation, {TintColor = Color3.fromRGB(0, 0, 0), TweenInformation = TransitionCCTweenInformation})
+function module.MultiCameraSystem(PartFolder, CameraTweenInformation, ColorCorrectionFadeInformation) --// This should be called as a coroutine.create
+	--// CameraTweenInformation, CCFadeInformation, and CCTWeenInformation are optional but MUST be put as false if they aren't being used
+	--// If no ColorCorrectionFadeInformation is inputted, there will be no CC fade at all
+	--// Format ColorCorrectionFadeInformation as a table like {TintColor = , TweenInformation = }
 	if PartFolder:FindFirstChild("Initial") == false and PartFolder:FindFirstChild("Final") == false then
 		warn("PartFolder incorrectly configured")
 	else
-		--Set up
+		--// Set up
 		local CamTweenInfo
 		local CCFadeInfo
 		local CameraTransitionCC
 		
-		--Set up camera tween information
+		--// Set up camera tween information
 		if CameraTweenInformation ~= false then
 			if type(CameraTweenInformation) == "userdata" then
 				CamTweenInfo = CameraTweenInformation
@@ -109,7 +109,7 @@ function module.MultiCameraSystem(PartFolder, CameraTweenInformation, ColorCorre
 			)
 		end
 		
-		--Sets up CC fade tween information if any is inputted
+		--// Sets up CC fade tween information if any is inputted
 		if ColorCorrectionFadeInformation ~= false then
 			if ColorCorrectionFadeInformation.TweenInformation ~= nil and type(ColorCorrectionFadeInformation.TweenInformation) == "userdata" then
 				CCFadeInfo = ColorCorrectionFadeInformation.TweenInformation
@@ -126,7 +126,7 @@ function module.MultiCameraSystem(PartFolder, CameraTweenInformation, ColorCorre
 			end
 		end
 
-		--Sets transition delay
+		--// Sets transition delay
 		local TransitionDelay = 0
 		
 		if CCFadeInfo ~= nil then
@@ -137,7 +137,7 @@ function module.MultiCameraSystem(PartFolder, CameraTweenInformation, ColorCorre
 			CameraTransitionCC.Parent = Lighting
 		end
 		
-		--Action
+		--// Action
 		local NumberOfCameraValues = table.getn(PartFolder.Initial:GetChildren())
 		local CurrentCameraValue = 0 --This will start it at the first CFrame element
 		
