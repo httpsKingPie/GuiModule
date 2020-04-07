@@ -1,4 +1,6 @@
---// Just put this in StarterGui!
+--https_KingPie
+
+--Just put this in StarterGui
 
 local module = {}
 
@@ -41,7 +43,7 @@ local TweenInformation3 = TweenInfo.new(
 	2
 )
 
---// Creates a looping sound
+--Creates a looping sound
 function module.LoopSound(SoundId, TweenInformation)
 	--MusicId is required (this is the ID of the music being played)
 	--TweenInformation is optional
@@ -68,22 +70,24 @@ function module.LoopSound(SoundId, TweenInformation)
 	end
 end
 
---// Example use, because this is really finicky
---// local MultiCamSystem = coroutine.create(GuiModule.MultiCameraSystem)
---// coroutine.resume(MultiCamSystem, CameraPositions, CameraTweenInformation, {TintColor = Color3.fromRGB(0, 0, 0), TweenInformation = TransitionCCTweenInformation})
-function module.MultiCameraSystem(PartFolder, CameraTweenInformation, ColorCorrectionFadeInformation) --// This should be called as a coroutine.create
-	--// CameraTweenInformation, CCFadeInformation, and CCTWeenInformation are optional but MUST be put as false if they aren't being used
-	--// If no ColorCorrectionFadeInformation is inputted, there will be no CC fade at all
-	--// Format ColorCorrectionFadeInformation as a table like {TintColor = , TweenInformation = }
+--Creates a rotational multi camera system (should be created as a coroutine if it's all going in one script [recommended])
+
+--Example use, because this is really finicky
+--local MultiCamSystem = coroutine.create(GuiModule.MultiCameraSystem)
+--coroutine.resume(MultiCamSystem, CameraPositions, CameraTweenInformation, {TintColor = Color3.fromRGB(0, 0, 0), TweenInformation = TransitionCCTweenInformation})
+function module.MultiCameraSystem(PartFolder, CameraTweenInformation, ColorCorrectionFadeInformation) --This should be called as a coroutine.create
+	--CameraTweenInformation, CCFadeInformation, and CCTWeenInformation are optional but MUST be put as false if they aren't being used
+	--If no ColorCorrectionFadeInformation is inputted, there will be no CC fade at all
+	--Format ColorCorrectionFadeInformation as a table like {TintColor = , TweenInformation = }
 	if PartFolder:FindFirstChild("Initial") == false and PartFolder:FindFirstChild("Final") == false then
 		warn("PartFolder incorrectly configured")
 	else
-		--// Set up
+		--Set up
 		local CamTweenInfo
 		local CCFadeInfo
 		local CameraTransitionCC
 		
-		--// Set up camera tween information
+		--Set up camera tween information
 		if CameraTweenInformation ~= false then
 			if type(CameraTweenInformation) == "userdata" then
 				CamTweenInfo = CameraTweenInformation
@@ -109,7 +113,7 @@ function module.MultiCameraSystem(PartFolder, CameraTweenInformation, ColorCorre
 			)
 		end
 		
-		--// Sets up CC fade tween information if any is inputted
+		--Sets up CC fade tween information if any is inputted
 		if ColorCorrectionFadeInformation ~= false then
 			if ColorCorrectionFadeInformation.TweenInformation ~= nil and type(ColorCorrectionFadeInformation.TweenInformation) == "userdata" then
 				CCFadeInfo = ColorCorrectionFadeInformation.TweenInformation
@@ -126,7 +130,7 @@ function module.MultiCameraSystem(PartFolder, CameraTweenInformation, ColorCorre
 			end
 		end
 
-		--// Sets transition delay
+		--Sets transition delay
 		local TransitionDelay = 0
 		
 		if CCFadeInfo ~= nil then
@@ -137,7 +141,7 @@ function module.MultiCameraSystem(PartFolder, CameraTweenInformation, ColorCorre
 			CameraTransitionCC.Parent = Lighting
 		end
 		
-		--// Action
+		--Action
 		local NumberOfCameraValues = table.getn(PartFolder.Initial:GetChildren())
 		local CurrentCameraValue = 0 --This will start it at the first CFrame element
 		
@@ -174,6 +178,7 @@ function module.MultiCameraSystem(PartFolder, CameraTweenInformation, ColorCorre
 	end
 end
 
+--Stops the rotational multi camera system (make sure to also stop the coroutine)
 function module.StopMultiCameraSystem()
 	local CurrentCameraTween = LocalPlayer.PlayerGui:FindFirstChild("CurrentCameraTween")
 	Camera.CameraType = Enum.CameraType.Custom
@@ -182,8 +187,28 @@ function module.StopMultiCameraSystem()
 	CurrentCameraTween:Destroy()
 end
 
+--Creates a flashing element(best done as a couroutine)
+
+--Example uses because this is finicky
+--local FlashingElement = coroutine.create(GuiModule.FlashingElement)
+--coroutine.resume(FlashingElement, TextLabel, 1.5)
 function module.FlashingElement(Element, Timer)
+	while wait(Timer) do
+		Element.Visible = not Element.Visible
+	end
+end
+
+--Creates a GUI view based around a part
+function module.SingeCameraView(Part)
+	Camera.CameraType = Enum.CameraType.Scriptable
 	
+	Camera.CameraSubject = Part
+	Camera.CFrame = Part.CFrame
+end
+
+function module.StopSingleCameraView()
+	Camera.CameraType = Enum.CameraType.Custom
+	Camera.CameraSubject = LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
 end
 
 return module
